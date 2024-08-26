@@ -8,13 +8,13 @@ pipeline {
         POSTGRES_TAG = '16.3'
     }
     stages {
-        stage('Clone Repository') {
+/*        stage('Clone Repository') {
             steps {
                 script {
                     sh 'git clone https://github.com/spring-projects/spring-petclinic.git'
                 }
             }
-        }
+        }*/
         stage('Build Docker Image') {
             steps {
                 script {
