@@ -15,7 +15,7 @@ pipeline {
                 }
             }
         }*/
-        stage('Build Docker Image') {
+/*        stage('Build Docker Image') {
             steps {
                 script {
                     sh '''
@@ -23,13 +23,13 @@ pipeline {
                     '''
                 }
             }
-        }
+        }*/
         stage('Deploy Application') {
             steps {
                 script {
                     // Remove existing containers if they exist
-                    //sh 'docker rm -f petclinic-app || true'
-                    //sh 'docker rm -f postgres-petclinic || true'
+                    sh 'docker rm -f pet || true'
+                    sh 'docker rm -f postgres-petclinic || true'
 
                     // Run PostgreSQL container
                     sh '''
