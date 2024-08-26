@@ -1,6 +1,6 @@
 FROM maven:3.9.7-amazoncorretto-17 AS base
 WORKDIR /app
-COPY . .
+COPY ./spring-petclinic .
 COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./
 RUN ./mvnw package -Dmaven.test.skip -Dspring-boot.run.profiles=postgres
