@@ -29,8 +29,8 @@ pipeline {
             steps {
                 script {
                     // Remove existing containers if they exist
-                    sh 'docker rm -f petclinic-app || true'
-                    sh 'docker rm -f postgres-petclinic || true'
+                    //sh 'docker rm -f petclinic-app || true'
+                    //sh 'docker rm -f postgres-petclinic || true'
 
                     // Run PostgreSQL container
                     sh '''
