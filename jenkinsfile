@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    cd spring-petclinic
+                    //cd spring-petclinic
                     docker build -t ${APP_IMAGE}:${APP_TAG} .
                     '''
                 }
