@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
+        APP_IMAGE = 'pet'
+        APP_TAG = 'latest'
+        POSTGRES_IMAGE = 'postgres'
+        POSTGRES_TAG = '16.3'
+    }
+    stages {
+        stage('Clone Repository') {
+            steps {
+                script {
+                    sh 'git clone https://github.com/spring-projects/spring-petclinic.git'
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh '''
+                    cd spring-petclinic
+                    docker build -t ${APP_IMAGE}:${APP_TAG} .
+                    '''
+                }
+            }
+        }
+        stage('Deploy Application') {
+            steps {
+                script {
+                    // Remove existing containers if they exist
+                    sh 'docker rm -f petclinic-app || true'
+                    sh 'docker rm -f postgres-petclinic || true'
+
+                    // Run PostgreSQL container
+                    sh '''
+                    docker run -d --name postgres-petclinic \
+                        -e POSTGRES_USER=petclinic \
+                        -e POSTGRES_PASSWORD=petclinic \
+                        -e POSTGRES_DB=petclinic \
+                        -p 5432:5432 ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+                    '''
+
+                    // Run PetClinic application container
+                    sh '''
+                    docker run -d -p 8082:8080 --name pet ${APP_IMAGE}:${APP_TAG}
+                    '''
+
+                    // List running containers
+                    sh 'docker ps'
+                }
+            }
+        }
+    }
+}
