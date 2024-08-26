@@ -19,6 +19,7 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    cd /var/jenkins_home/workspace/petclinic1/spring-petclinic
                     docker build -t ${APP_IMAGE}:${APP_TAG} .
                     '''
                 }
